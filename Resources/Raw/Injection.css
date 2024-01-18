@@ -1,0 +1,43 @@
+/* Type your CSS code here. */
+/* 一時ボタン用 */
+.temp_checkbox {
+    display: none;
+}
+
+.temp_checkbox[type=checkbox] + label {
+    color: gainsboro;
+    font-weight: normal;
+}
+
+.temp_checkbox[type=checkbox]:checked + label {
+    color: black;
+    font-weight: bold;
+}
+
+/* 長いカッコを隠すボタン用 */
+.folding_box {
+    color: darkgray;
+}
+
+.folding_box > input[type=checkbox] {
+    display: none;
+}
+
+.folding_box > input[type=checkbox] + span {
+    display: none;
+}
+
+.folding_box > input[type=checkbox]:checked + span {
+    display: inline;
+    color: black;
+}
+
+/* テキスト用*/
+#doc div, #doc p, #doc table, #doc dl, #doc blockquote,  #doc ul, #doc ol,
+.redactor-editor div, .redactor-editor p, .redactor-editor table, .redactor-editor dl, .redactor-editor blockquote, .redactor-editor ul, .redactor-editor ol {
+    line-height: 2em;
+}
+
+body {
+    font-weight: 500;
+}
