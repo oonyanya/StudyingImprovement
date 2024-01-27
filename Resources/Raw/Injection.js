@@ -55,7 +55,7 @@ function Inject_fn() {
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > p');
-    add_temp_marker(elements, /：.[ァ-ヴ]　/);
+    add_temp_marker(elements, /[ァ-ヴ]　/);
 
     elements = document.querySelectorAll('#doc > p');
     add_folding_marker(elements);
@@ -70,8 +70,8 @@ function Inject_fn() {
     add_folding_marker(elements);
 }
 
-if (document.readyState == 'complete') {
+if (document.readyState == 'interactive') {
     Inject_fn();
 } else {
-    window.addEventListener("load", Inject_fn());
+    window.addEventListener("DOMContentLoaded", Inject_fn());
 }
