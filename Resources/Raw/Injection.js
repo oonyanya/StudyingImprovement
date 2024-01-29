@@ -70,8 +70,8 @@ function Inject_fn() {
     add_folding_marker(elements);
 }
 
-if (document.readyState == 'interactive') {
-    Inject_fn();
-} else {
+if (document.readyState == 'loading') {
     window.addEventListener("DOMContentLoaded", Inject_fn());
+} else {
+    Inject_fn();
 }
