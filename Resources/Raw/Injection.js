@@ -42,13 +42,24 @@ function Inject_fn() {
         elements.forEach((e) => {
             /* 暗記ノート用マーカーがある場所はマーカーが機能しなくなるので無視する */
             if (e.outerHTML.match("span-memory") == null) {
-                const new_html = e.outerHTML.replaceAll(/（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').replaceAll(/）/g, '）</span></label>');
-                e.outerHTML = new_html;
+                const new_html = e.innerHTML.replaceAll(/（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').replaceAll(/）/g, '）</span></label>');
+                e.innerHTML = new_html;
             }
         });
     }
 
-    let elements = document.querySelectorAll('div.question_text > div > ol > li');
+    function wash_text_for_screen_reader(elements) {
+        elements.forEach((e) => {
+             /* EDGEのスクリーンリーダーが途中で止まってしまう対策 */
+             const new_html = e.innerHTML.replaceAll("・","、");
+             e.innerHTML = new_html;
+        });
+    }
+
+    let elements = document.querySelectorAll('div.question_text > div > ul > li');
+    add_temp_marker(elements);
+
+    elements = document.querySelectorAll('div.question_text > div > ol > li');
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > table > tbody > tr > *:last-child');
@@ -57,13 +68,29 @@ function Inject_fn() {
     elements = document.querySelectorAll('div.question_text > div > p');
     add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/);
 
+    elements = document.querySelectorAll('#doc > h1');
+    wash_text_for_screen_reader(elements);
+
+    elements = document.querySelectorAll('#doc > h2');
+    wash_text_for_screen_reader(elements);
+
+    elements = document.querySelectorAll('#doc > h3');
+    wash_text_for_screen_reader(elements);
+
     elements = document.querySelectorAll('#doc > p');
+    wash_text_for_screen_reader(elements);
     add_folding_marker(elements);
 
     elements = document.querySelectorAll('#doc > table > tbody > tr > td');
+    wash_text_for_screen_reader(elements);
     add_folding_marker(elements);
 
     elements = document.querySelectorAll('#doc > ul > li');
+    wash_text_for_screen_reader(elements);
+    add_folding_marker(elements);
+
+    elements = document.querySelectorAll('#doc > ol > li');
+    wash_text_for_screen_reader(elements);
     add_folding_marker(elements);
 
     elements = document.querySelectorAll('#answer_box_on > div > div > div > div > p');
