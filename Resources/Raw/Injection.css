@@ -32,12 +32,6 @@
     color: black;
 }
 
-/* テキスト用*/
-#doc div, #doc p, #doc table, #doc dl, #doc blockquote,  #doc ul, #doc ol,
-.redactor-editor div, .redactor-editor p, .redactor-editor table, .redactor-editor dl, .redactor-editor blockquote, .redactor-editor ul, .redactor-editor ol {
-    line-height: 2em;
-}
-
-body {
-    font-weight: 500;
+.redactor-editor *{
+    line-height: 1.8em !important;
 }
