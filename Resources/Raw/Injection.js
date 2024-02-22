@@ -98,7 +98,9 @@ function Inject_fn() {
 }
 
 if (document.readyState == 'loading') {
-    window.addEventListener("DOMContentLoaded", Inject_fn());
+    document.addEventListener("DOMContentLoaded",()=>{
+        Inject_fn();
+    });
 } else {
     Inject_fn();
 }
