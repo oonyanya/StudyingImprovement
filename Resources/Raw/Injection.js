@@ -1,39 +1,27 @@
 function Inject_fn() {
     const MARU = 'O';
     const BATSU = 'X';
+    const SANKAKU = '？';
 
     function add_temp_marker(elements) {
         add_temp_marker(elements, null);
     }
     function add_temp_marker(elements, matching) {
-        let id = 0;
         elements.forEach((e) => {
             if (e.textContent.match(matching) == null) {
                 return;
             }
-            const new_item1 = document.createElement('input');
-            new_item1.className = 'temp_checkbox';
-            new_item1.id = 'temp_checkbox' + id; /* ID must be uniq */
-            new_item1.type = 'checkbox';
+
+            const new_item1 = document.createElement('label');
+            new_item1.innerHTML = "<input class='temp_checkbox' type='checkbox'></input><span>" + MARU + "</span>";
 
             const new_item2 = document.createElement('label');
-            new_item2.setAttribute('for', new_item1.id);
-            new_item2.textContent = MARU;
-
-            id++;
-
-            const new_item3 = document.createElement('input');
-            new_item3.className = 'temp_checkbox';
-            new_item3.id = 'temp_checkbox' + id; /* ID must be uniq */
-            new_item3.type = 'checkbox';
+            new_item2.innerHTML = "<input class='temp_checkbox' type='checkbox'></input><span>" + BATSU + "</span>";
 
             const new_item4 = document.createElement('label');
-            new_item4.setAttribute('for', new_item3.id);
-            new_item4.textContent = BATSU;
+            new_item4.innerHTML = "<input class='temp_checkbox' type='checkbox'></input><span>" + SANKAKU + "</span>";
 
-            id++;
-
-            e.append(new_item1, new_item2, new_item3, new_item4);
+            e.append(new_item1, new_item2, new_item4);
         });
     }
 

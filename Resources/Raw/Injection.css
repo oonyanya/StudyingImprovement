@@ -4,15 +4,15 @@
     display: none;
 }
 
-    .temp_checkbox[type=checkbox] + label {
-        color: gainsboro;
-        font-weight: normal;
-    }
+label >  .temp_checkbox[type=checkbox] {
+    color: gainsboro;
+    font-weight: normal;
+}
 
-    .temp_checkbox[type=checkbox]:checked + label {
-        color: black;
-        font-weight: bold;
-    }
+label > .temp_checkbox[type=checkbox]:checked {
+    color: black;
+    font-weight: bold;
+}
 
 /* 長いカッコを隠すボタン用 */
 .folding_box {
