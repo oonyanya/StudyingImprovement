@@ -4,34 +4,51 @@
     display: none;
 }
 
-.temp_checkbox[type=checkbox] + label {
-    color: gainsboro;
-    font-weight: normal;
-}
+    .temp_checkbox[type=checkbox] + label {
+        color: gainsboro;
+        font-weight: normal;
+    }
 
-.temp_checkbox[type=checkbox]:checked + label {
-    color: black;
-    font-weight: bold;
-}
+    .temp_checkbox[type=checkbox]:checked + label {
+        color: black;
+        font-weight: bold;
+    }
 
 /* 長いカッコを隠すボタン用 */
 .folding_box {
     color: darkgray;
 }
 
-.folding_box > input[type=checkbox] {
+    .folding_box > input[type=checkbox] {
+        display: none;
+    }
+
+        .folding_box > input[type=checkbox] + span {
+            display: none;
+        }
+
+        .folding_box > input[type=checkbox]:checked + span {
+            display: inline;
+            color: black;
+        }
+
+/* 折り畳み機能で暗記ノートの機能が破壊されるので実装しなおし　*/
+.memory_box > input[type=checkbox] {
     display: none;
 }
 
-.folding_box > input[type=checkbox] + span {
-    display: none;
-}
+    .memory_box > input[type=checkbox] ~ span {
+        color: #dd0000;
+        background-color: #dd0000;
+    }
 
-.folding_box > input[type=checkbox]:checked + span {
-    display: inline;
-    color: black;
-}
+    .memory_box > input[type=checkbox]:checked ~ span {
+        color: black;
+        background-color: transparent;
+        border-color: #dd0000;
+    }
 
-.redactor-editor *{
+/* 老眼対策のため行間を広げる */
+.redactor-editor * {
     line-height: 1.8em !important;
 }

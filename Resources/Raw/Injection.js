@@ -38,51 +38,40 @@ function Inject_fn() {
     }
 
     function isHTML(htmlString) {
-      let parser = new DOMParser();
-      let doc = parser.parseFromString(htmlString, "application/xml");
-      let errorNode = doc.querySelector('parsererror');
-      return !errorNode;
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(htmlString, "application/xml");
+        let errorNode = doc.querySelector('parsererror');
+        return !errorNode;
     }
 
-    function replace_element(element,  f)
-    {
-      element.childNodes.forEach((e)=>{
-        if(e.nodeType == Node.TEXT_NODE){
-          let new_text = f(e.textContent);
-          /* HTMLの文法としては正しくても成立しない可能性があるのでとりあえずつけておく */
-          if(isHTML("<html>" + new_text + "</html>")){
-            /* 当該ノードを置き換える */
-            let template = document.createElement('span');
-            template.innerHTML = new_text;
-            element.replaceChild(template, e);
-          }
-        }else if(e.nodeType == Node.ELEMENT_NODE){
-          e.innerHTML = f(e.innerHTML);
-        }
-      });
+    function replace_element(element, f) {
+        element.innerHTML = f(element.innerHTML);
     }
 
-    function wash_string_for_sreen_reader(s)
-   {
-      /* EDGEのスクリーンリーダーが途中で止まってしまう対策 */
-      return s.replaceAll( "・", "、");
-   }
+    function wash_string_for_sreen_reader(s) {
+        /* EDGEのスクリーンリーダーが途中で止まってしまう対策 */
+        return s.replaceAll("・", "、");
+    }
 
     function add_folding_marker(elements) {
         const id = 0;
         elements.forEach((e) => {
-            replace_element(e, (s)=>{
-              let new_s =  s.replaceAll( /（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').replaceAll( /）/g,  '）</span></label>');
-              return wash_string_for_sreen_reader(new_s);
+            replace_element(e, (s) => {
+                /* 折り畳み機能で暗記ノートの機能が破壊されるので実装しなおし　*/
+                let new_s = s.
+                    replaceAll(/<span class=\"span-memory\">(.+)<\/span>/g, "<label class='memory_box'><input type='checkbox'></input><span class='span-memory'>$1</span></label>").
+                    replaceAll(/（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').
+                    replaceAll(/）/g, '）</span></label>');
+                return wash_string_for_sreen_reader(new_s);
             });
         });
     }
 
     function wash_element_for_screen_reader(elements) {
         elements.forEach((e) => {
-             replace_element(e, (s)=>{
+            replace_element(e, (s) => {
                 return wash_string_for_sreen_reader(s);
-             });
+            });
         });
     }
 
@@ -121,10 +110,20 @@ function Inject_fn() {
 
     elements = document.querySelectorAll('#answer_box_on > div > div > div > div > p');
     add_folding_marker(elements);
+
+    /* 暗記ノートの機能が破壊されてるので再度実装する */
+    $('#span-memory-toggle').unbind('click').click(function () {
+        if ($('#span-memory-toggle').prop('checked')) {
+            $('.memory_box > input[type=checkbox]').prop('checked', false);
+        } else {
+            $('.memory_box > input[type=checkbox]').prop('checked', true);
+        }
+    });
+
 }
 
 if (document.readyState == 'loading') {
-    document.addEventListener("DOMContentLoaded",()=>{
+    document.addEventListener("DOMContentLoaded", () => {
         Inject_fn();
     });
 } else {
