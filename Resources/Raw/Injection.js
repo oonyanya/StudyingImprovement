@@ -102,9 +102,9 @@ function Inject_fn() {
     /* 暗記ノートの機能が破壊されてるので再度実装する */
     $('#span-memory-toggle').unbind('click').click(function () {
         if ($('#span-memory-toggle').prop('checked')) {
-            $('.memory_box > input[type=checkbox]').prop('checked', false);
+            $('.span-memory-label > input[type=checkbox]').prop('checked', false);
         } else {
-            $('.memory_box > input[type=checkbox]').prop('checked', true);
+            $('.span-memory-label > input[type=checkbox]').prop('checked', true);
         }
     });
 
