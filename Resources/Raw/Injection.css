@@ -37,12 +37,14 @@ label > .temp_checkbox[type=checkbox]:checked {
     display: none;
 }
 
-    .span-memory-label > input[type=checkbox] ~ span {
+    .span-memory-label > input[type=checkbox] + span {
+        padding-left: 1em;
+        padding-right: 1em;
         color: #dd0000;
         background-color: #dd0000;
     }
 
-    .span-memory-label > input[type=checkbox]:checked ~ span {
+    .span-memory-label > input[type=checkbox]:checked + span {
         color: black;
         background-color: transparent;
         border-color: #dd0000;
