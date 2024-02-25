@@ -33,16 +33,16 @@
         }
 
 /* 折り畳み機能で暗記ノートの機能が破壊されるので実装しなおし　*/
-.memory_box > input[type=checkbox] {
+.span-memory-label > input[type=checkbox] {
     display: none;
 }
 
-    .memory_box > input[type=checkbox] ~ span {
+    .span-memory-label > input[type=checkbox] ~ span {
         color: #dd0000;
         background-color: #dd0000;
     }
 
-    .memory_box > input[type=checkbox]:checked ~ span {
+    .span-memory-label > input[type=checkbox]:checked ~ span {
         color: black;
         background-color: transparent;
         border-color: #dd0000;

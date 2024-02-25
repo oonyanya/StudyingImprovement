@@ -59,7 +59,7 @@ function Inject_fn() {
             replace_element(e, (s) => {
                 /* 折り畳み機能で暗記ノートの機能が破壊されるので実装しなおし　*/
                 let new_s = s.
-                    replaceAll(/<span class=\"span-memory\">(.+)<\/span>/g, "<label class='memory_box'><input type='checkbox'></input><span class='span-memory'>$1</span></label>").
+                    replaceAll(/<span class=\"span-memory\">(.+?)<\/span>/g, "<label class='span-memory-label'><input type='checkbox'></input><span class='span-memory'>$1</span></label>").
                     replaceAll(/（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').
                     replaceAll(/）/g, '）</span></label>');
                 return wash_string_for_sreen_reader(new_s);
