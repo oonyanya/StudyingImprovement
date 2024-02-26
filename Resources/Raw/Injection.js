@@ -98,8 +98,13 @@ function Inject_fn() {
 
     elements = document.querySelectorAll('#answer_box_on > div > div > div > div > p');
     add_folding_marker(elements);
+}
 
-    /* 暗記ノートの機能が破壊されてるので再度実装する */
+function Inject_fn_onload()
+{
+    /* iframがある場合、どうせ後で読み込まれる */
+    if(typeof(jQuery) == "undefined")
+        return;
     $('#span-memory-toggle').unbind('click').click(function () {
         if ($('#span-memory-toggle').prop('checked')) {
             $('.span-memory-label > input[type=checkbox]').prop('checked', false);
@@ -107,13 +112,24 @@ function Inject_fn() {
             $('.span-memory-label > input[type=checkbox]').prop('checked', true);
         }
     });
-
 }
+
+function Inject_fn_oninteractive()
+{
+    Inject_fn();
+    window.addEventListener("load",()=>{
+        Inject_fn_onload();
+    });
+}
+
 
 if (document.readyState == 'loading') {
     document.addEventListener("DOMContentLoaded", () => {
-        Inject_fn();
-    });
+        Inject_fn_oninteractive();
+    });    
+} else if(document.readyState == 'interactive'){
+    Inject_fn_oninteractive();
 } else {
     Inject_fn();
+    Inject_fn_onload();
 }
