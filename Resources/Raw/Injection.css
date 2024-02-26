@@ -32,23 +32,12 @@ label > .temp_checkbox[type=checkbox]:checked {
             color: black;
         }
 
-/* 折り畳み機能で暗記ノートの機能が破壊されるので実装しなおし　*/
-.span-memory-label > input[type=checkbox] {
-    display: none;
+/* 折り畳み機能と暗記マーカーがかぶる時の対策 */
+.span-memory
+{
+    padding-left: 2em;
+    padding-right: 2em;
 }
-
-    .span-memory-label > input[type=checkbox] + span {
-        padding-left: 1em;
-        padding-right: 1em;
-        color: #dd0000;
-        background-color: #dd0000;
-    }
-
-    .span-memory-label > input[type=checkbox]:checked + span {
-        color: black;
-        background-color: transparent;
-        border-color: #dd0000;
-    }
 
 /* 老眼対策のため行間を広げる */
 .redactor-editor * {

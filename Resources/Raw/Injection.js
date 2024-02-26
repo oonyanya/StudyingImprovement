@@ -45,9 +45,7 @@ function Inject_fn() {
         const id = 0;
         elements.forEach((e) => {
             replace_element(e, (s) => {
-                /* 折り畳み機能で暗記ノートの機能が破壊されるので実装しなおし　*/
                 let new_s = s.
-                    replaceAll(/<span class=\"span-memory\">(.+?)<\/span>/g, "<label class='span-memory-label'><input type='checkbox'></input><span class='span-memory'>$1</span></label>").
                     replaceAll(/（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').
                     replaceAll(/）/g, '）</span></label>');
                 return wash_string_for_sreen_reader(new_s);
@@ -105,12 +103,15 @@ function Inject_fn_onload()
     /* iframがある場合、どうせ後で読み込まれる */
     if(typeof(jQuery) == "undefined")
         return;
-    $('#span-memory-toggle').unbind('click').click(function () {
-        if ($('#span-memory-toggle').prop('checked')) {
-            $('.span-memory-label > input[type=checkbox]').prop('checked', false);
-        } else {
-            $('.span-memory-label > input[type=checkbox]').prop('checked', true);
-        }
+    /* 暗記マーカー機能が破壊されたので再度定義する(ソース：member.studying.jp/skin/common/js/doc.js) */
+    $('.span-memory').unbind('click').click(function() {
+        //if($('#span-memory-toggle').prop('checked')){
+            if($(this).hasClass("touch")){
+                $(this).removeClass("touch");
+            }else{
+                $(this).addClass("touch");
+            }
+        //}
     });
 }
 
