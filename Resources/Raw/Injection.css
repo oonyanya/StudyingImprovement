@@ -4,12 +4,12 @@
     display: none;
 }
 
-label >  .temp_checkbox[type=checkbox] {
+label >  .temp_checkbox[type=checkbox] + span{
     color: gainsboro;
     font-weight: normal;
 }
 
-label > .temp_checkbox[type=checkbox]:checked {
+label > .temp_checkbox[type=checkbox]:checked  + span{
     color: black;
     font-weight: bold;
 }
