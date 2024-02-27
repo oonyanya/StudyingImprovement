@@ -105,13 +105,11 @@ function Inject_fn_onload()
         return;
     /* 暗記マーカー機能が破壊されたので再度定義する(ソース：member.studying.jp/skin/common/js/doc.js) */
     $('.span-memory').unbind('click').click(function() {
-        //if($('#span-memory-toggle').prop('checked')){
             if($(this).hasClass("touch")){
                 $(this).removeClass("touch");
             }else{
                 $(this).addClass("touch");
             }
-        //}
     });
 }
 
