@@ -19,18 +19,14 @@ label > .temp_checkbox[type=checkbox]:checked  + span{
     color: darkgray;
 }
 
-    .folding_box > input[type=checkbox] {
-        display: none;
-    }
+.folding_box > span {
+    display: none;
+}
 
-        .folding_box > input[type=checkbox] + span {
-            display: none;
-        }
-
-        .folding_box > input[type=checkbox]:checked + span {
-            display: inline;
-            color: black;
-        }
+.folding_box.touch > span {
+    display: inline;
+    color: black;
+}
 
 /* 折り畳み機能と暗記マーカーがかぶる時の対策 */
 .span-memory
