@@ -40,12 +40,11 @@ namespace StudyingImprovement
 
         private async void WebView_Navigated(object? sender, WebNavigatedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("navigating {0} {1}", e.Url, e.NavigationEvent.ToString()));
             string css = await LoadAsset("Injection.css");
-            string css_in_js = string.Format("var el = document.createElement('style');el.textContent = '{0}';document.head.append(el);", css);
-            await this.WebView.EvaluateJavaScriptAsync(css_in_js);
-
             string js = await LoadAsset("Injection.js");
-            await this.WebView.EvaluateJavaScriptAsync(js);
+            string inection_code = string.Format("function inject_css(){{var el=document.createElement('style');el.textContent = '{0}';document.head.append(el);}}if (document.readyState === 'complete'){{inject_css();}}else{{window.addEventListener('load', function(){{inject_css();}});}}{1}", css, js);
+            await this.WebView.EvaluateJavaScriptAsync(inection_code);
         }
 
         private async Task<string> LoadAsset(string name)
