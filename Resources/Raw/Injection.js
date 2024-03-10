@@ -46,8 +46,8 @@ function Inject_fn() {
         elements.forEach((e) => {
             replace_element(e, (s) => {
                 let new_s = s.
-                    replaceAll(/（/g, '<label class=\'folding_box\'>※<input type=\'checkbox\'></input><span>（').
-                    replaceAll(/）/g, '）</span></label>');
+                    replaceAll(/（/g, '<span class=\'folding_box\'>※<span>（').
+                    replaceAll(/）/g, '）</span></span>');
                 return wash_string_for_sreen_reader(new_s);
             });
         });
@@ -121,6 +121,16 @@ function Inject_fn_onload()
             }else{
                 $(this).addClass("touch");
             }
+    });
+    /* 折り畳み */
+    $('.folding_box').unbind('click').click(function() {
+            if($(this).hasClass("touch")){
+                $(this).removeClass("touch");
+            }else{
+                $(this).addClass("touch");
+            }
+            /* 暗記ノートの部分が親要素の場合、親に影響が及ぶと変な動作をしてしまう */
+            return false;
     });
 }
 
