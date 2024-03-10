@@ -96,6 +96,17 @@ function Inject_fn() {
 
     elements = document.querySelectorAll('#answer_box_on > div > div > div > div > p');
     add_folding_marker(elements);
+
+    /* video.jsを使っているようなので、モバイルデーターの節約のため自動再生を止める */
+    if (typeof (videojs) != 'undefined') {
+        console.log("video js hook start");
+        videojs.hook('beforesetup', function (videoEl, options) {
+            console.log("video js hook success");
+            options.autoplay = false;
+            options.preload = 'none';
+            return options;
+        });
+    }
 }
 
 function Inject_fn_onload()
@@ -121,7 +132,7 @@ function Inject_fn_oninteractive()
     });
 }
 
-
+console.log("document state:" + document.readyState);
 if (document.readyState == 'loading') {
     document.addEventListener("DOMContentLoaded", () => {
         Inject_fn_oninteractive();
