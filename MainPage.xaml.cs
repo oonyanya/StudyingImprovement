@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration;
 using System.Text;
+using CommunityToolkit.Maui.Alerts;
 
 namespace StudyingImprovement
 {
@@ -8,7 +9,18 @@ namespace StudyingImprovement
         public MainPage()
         {
             InitializeComponent();
-            this.WebView.Navigated += WebView_Navigated;
+            this.Loaded += MainPage_Loaded;
+        }
+
+        private void MainPage_Loaded(object? sender, EventArgs e)
+        {
+            var connectionProfile = Connectivity.Current.ConnectionProfiles;
+            bool hasWifi = connectionProfile.Contains(ConnectionProfile.WiFi);
+            if(hasWifi == false)
+            {
+                var toast = Toast.Make("WIFI is disabled. To play movie and sound, please enable WIFI.");
+                toast.Show();
+            }
         }
 
         protected override bool OnBackButtonPressed()
@@ -33,33 +45,11 @@ namespace StudyingImprovement
         // If this is not disabled then download links that open in a new tab won't work
         androidWebView.Settings.SetSupportMultipleWindows(false);
 
+        androidWebView.SetWebViewClient(new Platforms.Android.MyWebViewClient());
+
         // Custom download listener for Android
         androidWebView.SetDownloadListener(new Platforms.Android.MyDownloadListener());
 #endif
-        }
-
-        private async void WebView_Navigated(object? sender, WebNavigatedEventArgs e)
-        {
-            string css = await LoadAsset("Injection.css");
-            string css_in_js = string.Format("var el = document.createElement('style');el.textContent = '{0}';document.head.append(el);", css);
-            await this.WebView.EvaluateJavaScriptAsync(css_in_js);
-
-            string js = await LoadAsset("Injection.js");
-            await this.WebView.EvaluateJavaScriptAsync(js);
-        }
-
-        private async Task<string> LoadAsset(string name)
-        {
-            using var stream = await FileSystem.OpenAppPackageFileAsync(name);
-            using var reader = new StreamReader(stream);
-            StringBuilder sb = new StringBuilder();
-            string? line;
-            while ((line = await reader.ReadLineAsync()) != null)
-            {
-                sb.Append(line.Trim());
-            }
-            var contents = sb.ToString();
-            return contents;
         }
 
     }

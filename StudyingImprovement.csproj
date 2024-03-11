@@ -40,42 +40,42 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>1.0.6</ApplicationDisplayVersion>
+	  <ApplicationDisplayVersion>1.0.9</ApplicationDisplayVersion>
 	  <ApplicationId>com.fooproject.studyingimprovement</ApplicationId>
 	</PropertyGroup>
 
@@ -106,6 +106,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
