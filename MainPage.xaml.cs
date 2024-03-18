@@ -25,6 +25,20 @@ namespace StudyingImprovement
 
         protected override bool OnBackButtonPressed()
         {
+#if ANDROID
+            var androidWebView = WebView.Handler.PlatformView as Android.Webkit.WebView;
+
+            if (androidWebView.CanGoBack())
+            {
+                androidWebView.GoBack();
+                return true;
+            }
+            else
+            {
+                base.OnBackButtonPressed();
+                return false;
+            }
+#else
             if (WebView.CanGoBack)
             {
                 WebView.GoBack();
@@ -35,6 +49,7 @@ namespace StudyingImprovement
                 base.OnBackButtonPressed();
                 return false;
             }
+#endif
         }
 
         protected override void OnHandlerChanged()
