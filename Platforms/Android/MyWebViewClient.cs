@@ -7,6 +7,7 @@ using Microsoft.Maui.Networking;
 using Java.IO;
 using System.Text;
 using Android.Graphics;
+using StudyingImprovement.Model;
 
 namespace StudyingImprovement.Platforms.Android
 {
@@ -17,7 +18,7 @@ namespace StudyingImprovement.Platforms.Android
             var connectionProfile = Connectivity.Current.ConnectionProfiles;
             bool hasWifi =  connectionProfile.Contains(ConnectionProfile.WiFi);
             Regex regex = new Regex(".+\\.(mp3|mp4|ts)"); 
-            if (hasWifi == false && regex.IsMatch(request.Url.Path))
+            if (hasWifi == false && Setting.Current.ForceDownloadMovie == false && regex.IsMatch(request.Url.Path))
             {
                 System.Diagnostics.Debug.WriteLine("blocked:" + request.Url.Path);
                 //ストリーミング動画をブロックする

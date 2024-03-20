@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration;
 using System.Text;
 using CommunityToolkit.Maui.Alerts;
+using StudyingImprovement.Model;
 
 namespace StudyingImprovement
 {
@@ -16,7 +17,7 @@ namespace StudyingImprovement
         {
             var connectionProfile = Connectivity.Current.ConnectionProfiles;
             bool hasWifi = connectionProfile.Contains(ConnectionProfile.WiFi);
-            if(hasWifi == false)
+            if(hasWifi == false && Setting.Current.ForceDownloadMovie == false)
             {
                 var toast = Toast.Make("WIFI is disabled. To play movie and sound, please enable WIFI.");
                 toast.Show();

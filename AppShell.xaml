@@ -8,10 +8,18 @@
     Shell.NavBarIsVisible="False"
     Title="StudyingImprovement">
 
-    <ShellContent
+    <TabBar>
+        <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" 
         />
+
+        <ShellContent
+        Title="Setting"
+        ContentTemplate="{DataTemplate local:SettingPage}"
+        Route="SettingPage" 
+        />
+    </TabBar>
 
 </Shell>
