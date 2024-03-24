@@ -14,7 +14,8 @@ namespace StudyingImprovement
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .Services.AddHybridWebView();
 
 #if DEBUG
     		builder.Logging.AddDebug();

@@ -114,6 +114,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\HybridWebView\HybridWebView.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="SettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
