@@ -2,7 +2,7 @@
 using Android.Content;
 using Android.Widget;
 
-namespace StudyingImprovement.Platforms.Android
+namespace HybridWebView
 {
     public class MyBroadcastReceiver : BroadcastReceiver
     {

@@ -4,7 +4,7 @@ using Android.Webkit;
 using Android.Widget;
 using System.Text.RegularExpressions;
 
-namespace StudyingImprovement.Platforms.Android
+namespace HybridWebView
 {
     public class MyDownloadListener : Java.Lang.Object, IDownloadListener
     {
