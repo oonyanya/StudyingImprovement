@@ -1,4 +1,5 @@
-﻿namespace HybridWebView
+﻿using System.Web;
+namespace HybridWebView
 {
     internal static class QueryStringHelper
     {
