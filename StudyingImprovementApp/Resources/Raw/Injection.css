@@ -14,6 +14,15 @@ label > .temp_checkbox[type=checkbox]:checked  + span{
     font-weight: bold;
 }
 
+label > .temp_checkbox[type=checkbox] + span.strikeline {
+    text-decoration-line: initial;
+    color: black;
+}
+label > .temp_checkbox[type=checkbox]:checked + span.strikeline {
+    text-decoration-line: line-through;
+    color: gainsboro;
+}
+
 /* 長いカッコを隠すボタン用 */
 .folding_box {
     color: darkgray;
