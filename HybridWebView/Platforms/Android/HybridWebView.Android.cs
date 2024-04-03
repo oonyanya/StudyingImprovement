@@ -36,6 +36,12 @@ namespace HybridWebView
             // Custom download listener for Android
             PlatformWebView.SetDownloadListener(new MyDownloadListener());
 
+            PlatformWebView.Settings.CacheMode = CacheModes.Normal;
+
+            PlatformWebView.Settings.DatabaseEnabled = true;
+
+            PlatformWebView.Settings.MixedContentMode = MixedContentHandling.CompatibilityMode;
+
             return Task.CompletedTask;
         }
 
