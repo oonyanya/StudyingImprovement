@@ -23,6 +23,11 @@ label > .temp_checkbox[type=checkbox]:checked + span.strikeline {
     color: gainsboro;
 }
 
+/* 一時的なメモ用 */
+.temp_memo{
+    width: 100%;
+}
+
 /* 長いカッコを隠すボタン用 */
 .folding_box {
     color: darkgray;
