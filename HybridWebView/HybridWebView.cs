@@ -159,44 +159,7 @@ namespace HybridWebView
             try
             {
                 // When no query parameters are passed, the SendRoundTripMessageToDotNet JavaScript method is expected to have been called.
-                if (args.QueryParams != null && args.QueryParams.TryGetValue("__ajax", out string? jsonQueryString))
-                {
-                    if (jsonQueryString != null)
-                    {
-                        var invokeData = JsonSerializer.Deserialize<JSInvokeMethodData>(jsonQueryString);
-
-                        if (invokeData != null && invokeData.MethodName != null)
-                        {
-                            object? result = InvokeDotNetMethod(invokeData);
-
-                            if (result != null)
-                            {
-                                args.ResponseContentType = "application/json";
-
-                                DotNetInvokeResult dotNetInvokeResult;
-
-                                var resultType = result.GetType();
-                                if (resultType.IsArray || resultType.IsClass)
-                                {
-                                    dotNetInvokeResult = new DotNetInvokeResult()
-                                    {
-                                        Result = JsonSerializer.Serialize(result),
-                                        IsJson = true,
-                                    };
-                                }
-                                else
-                                {
-                                    dotNetInvokeResult = new DotNetInvokeResult()
-                                    {
-                                        Result = result,
-                                    };
-                                }
-                                args.ResponseStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(JsonSerializer.Serialize(dotNetInvokeResult)));
-                            }
-                        }
-                    }
-                }
-                else if (ProxyRequestReceived != null) //Check to see if user has subscribed to the event.
+                if (ProxyRequestReceived != null) //Check to see if user has subscribed to the event.
                 {
                     await ProxyRequestReceived(args);
                 }

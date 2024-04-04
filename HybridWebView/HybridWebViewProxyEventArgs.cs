@@ -1,4 +1,6 @@
-﻿namespace HybridWebView
+﻿using System.Collections.Specialized;
+
+namespace HybridWebView
 {
     /// <summary>
     /// Event arg object for a proxy request from the <see cref="HybridWebView"/>.
@@ -12,18 +14,12 @@
         public HybridWebViewProxyEventArgs(string fullUrl)
         {
             Url = fullUrl;
-            QueryParams = QueryStringHelper.GetKeyValuePairs(fullUrl);
         }
 
         /// <summary>
         /// The full request URL.
         /// </summary>
         public string Url { get; }
-
-        /// <summary>
-        /// Query string values extracted from the request URL.
-        /// </summary>
-        public IDictionary<string, string> QueryParams { get; }
 
         /// <summary>
         /// The response content type.

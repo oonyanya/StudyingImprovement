@@ -25,6 +25,18 @@ function Inject_fn() {
         });
     }
 
+    function add_temp_marker_for_text(elements, matching) {
+        elements.forEach((e) => {
+            replace_element(e, (s) => {
+                let new_s = s.
+                    replaceAll(matching,
+                        "<label><input class='temp_checkbox' type='checkbox'></input><span class='strikeline'>$1</span></label>"
+                    );
+                return new_s;
+            });
+        });
+    }
+
     function isHTML(htmlString) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(htmlString, "application/xml");
@@ -72,6 +84,7 @@ function Inject_fn() {
 
     elements = document.querySelectorAll('div.question_text > div > p');
     add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/);
+    add_temp_marker_for_text(elements, /([1-9]\s[ァ-ヴ]{2})/g);
 
     elements = document.querySelectorAll('#doc > h1');
     wash_element_for_screen_reader(elements);
