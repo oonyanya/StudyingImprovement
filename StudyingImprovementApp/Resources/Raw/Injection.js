@@ -73,18 +73,29 @@ function Inject_fn() {
         });
     }
 
+    function add_temp_memo(element) {
+        let memo_element = document.createElement("textarea");
+        memo_element.className = "temp_memo";
+        memo_element.setAttribute("placeholder", "It is memo but is not  saved.");
+        element.append(memo_element);
+    }
+
     let elements = document.querySelectorAll('div.question_text > div > ul > li');
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > ol > li');
     add_temp_marker(elements);
 
-    elements = document.querySelectorAll('div.question_text > div > table > tbody > tr > *:last-child');
+    elements = document.querySelectorAll('div.question_text > div > table > tbody > tr > *:first-child');
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > p');
     add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/);
-    add_temp_marker_for_text(elements, /([1-9]\s[ァ-ヴ]{2})/g);
+    add_temp_marker(elements, /[1-9１-９]\s*((①|②|③|④|⑤|⑥|⑦|⑧|⑨)[ァ-ヴ]\s)+/);
+    add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/);
+    add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g);
+
+    add_temp_memo(document.querySelector("div.question_text > div"));
 
     elements = document.querySelectorAll('#doc > h1');
     wash_element_for_screen_reader(elements);
