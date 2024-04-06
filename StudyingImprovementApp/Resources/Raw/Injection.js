@@ -92,8 +92,6 @@ function Inject_fn() {
 
     elements = document.querySelectorAll('div.question_text > div > p');
     add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/);
-
-    elements = document.querySelectorAll('div.question_text > div');
     add_temp_marker(elements, /[1-9１-９]\s*((①|②|③|④|⑤|⑥|⑦|⑧|⑨)[ァ-ヴ]\s)+/);
     add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/);
     add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g);
