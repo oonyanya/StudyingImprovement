@@ -41,11 +41,13 @@ namespace StudyingImprovement
 
         private async void WebView_Navigated(object? sender, WebNavigatedEventArgs e)
         {
-            string css = await LoadAsset("Injection.css");
-            string js = await LoadAsset("Injection.js");
-            string inection_code = string.Format("function inject_css(){{var el=document.createElement('style');el.textContent = '{0}';document.head.append(el);}}if (document.readyState === 'complete'){{inject_css();}}else{{window.addEventListener('load', function(){{inject_css();}});}}{1}", css, js);
-            await WebView.EvaluateJavaScriptAsync(inection_code);
-
+            if(e.Result == WebNavigationResult.Success)
+            {
+                string css = await LoadAsset("Injection.css");
+                string js = await LoadAsset("Injection.js");
+                string inection_code = string.Format("function inject_css(){{var el=document.createElement('style');el.textContent = '{0}';document.head.append(el);}}if (document.readyState === 'complete'){{inject_css();}}else{{window.addEventListener('load', function(){{inject_css();}});}}{1}", css, js);
+                await WebView.EvaluateJavaScriptAsync(inection_code);
+            }
             this.ActivityIndicator.IsRunning = false;
         }
 
