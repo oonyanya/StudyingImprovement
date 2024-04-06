@@ -6,7 +6,9 @@
 
     <AbsoluteLayout>
         <ejs:HybridWebView x:Name="WebView" StartPath="https://member.studying.jp"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"/>
-        <ActivityIndicator x:Name="ActivityIndicator"  BackgroundColor="#d0eeeeee" AbsoluteLayout.LayoutBounds="0.5,0.5,50,50" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        <Frame BackgroundColor="#80000000" x:Name="ActivityIndicator"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ActivityIndicator IsRunning="True" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>   
+        </Frame>
     </AbsoluteLayout>
 
 </ContentPage>
