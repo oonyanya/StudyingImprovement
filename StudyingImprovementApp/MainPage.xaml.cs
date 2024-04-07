@@ -36,7 +36,9 @@ namespace StudyingImprovement
         }
         private void WebView_Navigating(object? sender, WebNavigatingEventArgs e)
         {
-            this.ActivityIndicator.IsVisible = true;
+            this.ProgressBar.IsVisible = true;
+            this.ProgressBar.Progress = 0.1;
+            this.ProgressBar.ProgressTo(0.8, 500, Easing.Linear);
         }
 
         private async void WebView_Navigated(object? sender, WebNavigatedEventArgs e)
@@ -47,8 +49,9 @@ namespace StudyingImprovement
                 string js = await LoadAsset("Injection.js");
                 string inection_code = string.Format("function inject_css(){{var el=document.createElement('style');el.textContent = '{0}';document.head.append(el);}}if (document.readyState === 'complete'){{inject_css();}}else{{window.addEventListener('load', function(){{inject_css();}});}}{1}", css, js);
                 await WebView.EvaluateJavaScriptAsync(inection_code);
+                this.ProgressBar.Progress = 1;
+                this.ProgressBar.IsVisible = false;
             }
-            this.ActivityIndicator.IsVisible = false;
         }
 
         private async Task<string> LoadAsset(string name)
