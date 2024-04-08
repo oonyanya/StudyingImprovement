@@ -74,9 +74,10 @@ function Inject_fn() {
     }
 
     function add_temp_memo(element) {
+        if (element == null) return;
         let memo_element = document.createElement("textarea");
         memo_element.className = "temp_memo";
-        memo_element.setAttribute("placeholder", "It is memo but is not  saved.");
+        memo_element.setAttribute("placeholder", "It is for temporary memo");
         element.append(memo_element);
     }
 
@@ -95,7 +96,7 @@ function Inject_fn() {
     add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/);
     add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g);
 
-    add_temp_memo(document.querySelector("div.question_text > div"));
+    add_temp_memo(document.querySelector("div.question_item"));
 
     elements = document.querySelectorAll('#doc > h1');
     wash_element_for_screen_reader(elements);
@@ -133,35 +134,33 @@ function Inject_fn() {
     }
 }
 
-function Inject_fn_onload()
-{
+function Inject_fn_onload() {
     /* iframがある場合、どうせ後で読み込まれる */
-    if(typeof(jQuery) == "undefined")
+    if (typeof (jQuery) == "undefined")
         return;
     /* 暗記マーカー機能が破壊されたので再度定義する(ソース：member.studying.jp/skin/common/js/doc.js) */
-    $('.span-memory').unbind('click').click(function() {
-            if($(this).hasClass("touch")){
-                $(this).removeClass("touch");
-            }else{
-                $(this).addClass("touch");
-            }
+    $('.span-memory').unbind('click').click(function () {
+        if ($(this).hasClass("touch")) {
+            $(this).removeClass("touch");
+        } else {
+            $(this).addClass("touch");
+        }
     });
     /* 折り畳み */
-    $('.folding_box').unbind('click').click(function() {
-            if($(this).hasClass("touch")){
-                $(this).removeClass("touch");
-            }else{
-                $(this).addClass("touch");
-            }
-            /* 暗記ノートの部分が親要素の場合、親に影響が及ぶと変な動作をしてしまう */
-            return false;
+    $('.folding_box').unbind('click').click(function () {
+        if ($(this).hasClass("touch")) {
+            $(this).removeClass("touch");
+        } else {
+            $(this).addClass("touch");
+        }
+        /* 暗記ノートの部分が親要素の場合、親に影響が及ぶと変な動作をしてしまう */
+        return false;
     });
 }
 
-function Inject_fn_oninteractive()
-{
+function Inject_fn_oninteractive() {
     Inject_fn();
-    window.addEventListener("load",()=>{
+    window.addEventListener("load", () => {
         Inject_fn_onload();
     });
 }
@@ -170,8 +169,8 @@ console.log("document state:" + document.readyState);
 if (document.readyState == 'loading') {
     document.addEventListener("DOMContentLoaded", () => {
         Inject_fn_oninteractive();
-    });    
-} else if(document.readyState == 'interactive'){
+    });
+} else if (document.readyState == 'interactive') {
     Inject_fn_oninteractive();
 } else {
     Inject_fn();

@@ -4,6 +4,13 @@
              xmlns:ejs="clr-namespace:HybridWebView;assembly=HybridWebView"
              x:Class="StudyingImprovement.MainPage">
 
-    <ejs:HybridWebView x:Name="WebView" StartPath="https://member.studying.jp" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="0"/>
+        <ejs:HybridWebView x:Name="WebView" StartPath="https://member.studying.jp" Grid.Row="1"/>
+    </Grid>
 
 </ContentPage>
