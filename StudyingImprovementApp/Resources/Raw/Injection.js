@@ -12,14 +12,17 @@ function Inject_fn() {
                 return;
             }
 
-            const new_item1 = document.createElement('label');
-            new_item1.innerHTML = "<input class='temp_checkbox' type='checkbox'></input><span>" + MARU + "</span>";
+            const new_item1 = document.createElement('span');
+            new_item1.className= "temp_checkbox mark";
+            new_item1.innerHTML = MARU;
 
-            const new_item2 = document.createElement('label');
-            new_item2.innerHTML = "<input class='temp_checkbox' type='checkbox'></input><span>" + BATSU + "</span>";
+            const new_item2 = document.createElement('span');
+            new_item2.className= "temp_checkbox mark";
+            new_item2.innerHTML = BATSU;
 
-            const new_item4 = document.createElement('label');
-            new_item4.innerHTML = "<input class='temp_checkbox' type='checkbox'></input><span>" + SANKAKU + "</span>";
+            const new_item4 = document.createElement('span');
+            new_item4.className= "temp_checkbox mark";
+            new_item4.innerHTML = SANKAKU;
 
             e.append(new_item1, new_item2, new_item4);
         });
@@ -30,7 +33,7 @@ function Inject_fn() {
             replace_element(e, (s) => {
                 let new_s = s.
                     replaceAll(matching,
-                        "<label><input class='temp_checkbox' type='checkbox'></input><span class='strikeline'>$1</span></label>"
+                        "<span class='temp_checkbox strikeline'>$1</span>"
                     );
                 return new_s;
             });
@@ -91,10 +94,11 @@ function Inject_fn() {
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > p');
-    add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/);
-    add_temp_marker(elements, /[1-9１-９]\s*((①|②|③|④|⑤|⑥|⑦|⑧|⑨)[ァ-ヴ]\s)+/);
-    add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/);
-    add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g);
+    add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/); //「ア　ねこねこ」に一致
+    add_temp_marker(elements, /[1-9１-９]\s*((①|②|③|④|⑤|⑥|⑦|⑧|⑨)[ァ-ヴ]\s)+/); //「１ ①ア ①ア」に一致
+    add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/); //「１ Ａウ ２ Ａウ」に一致
+    add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g); //「１ アウ ２ イウ」に一致
+    add_temp_marker_for_text(elements, /(.+)/g);
 
     add_temp_memo(document.querySelector("div.question_item"));
 
@@ -148,6 +152,16 @@ function Inject_fn_onload() {
     });
     /* 折り畳み */
     $('.folding_box').unbind('click').click(function () {
+        if ($(this).hasClass("touch")) {
+            $(this).removeClass("touch");
+        } else {
+            $(this).addClass("touch");
+        }
+        /* 暗記ノートの部分が親要素の場合、親に影響が及ぶと変な動作をしてしまう */
+        return false;
+    });
+    /* 一時チェック */
+    $('.temp_checkbox').unbind('click').click(function () {
         if ($(this).hasClass("touch")) {
             $(this).removeClass("touch");
         } else {

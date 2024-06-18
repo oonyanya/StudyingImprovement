@@ -1,24 +1,22 @@
 /* Type your CSS code here. */
 /* 一時ボタン用 */
-.temp_checkbox {
-    display: none;
-}
-
-label >  .temp_checkbox[type=checkbox] + span{
+.temp_checkbox.mark {
     color: gainsboro;
     font-weight: normal;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
-label > .temp_checkbox[type=checkbox]:checked  + span{
+.temp_checkbox.mark.touch{
     color: black;
     font-weight: bold;
 }
 
-label > .temp_checkbox[type=checkbox] + span.strikeline {
+.temp_checkbox.strikeline {
     text-decoration-line: initial;
     color: black;
 }
-label > .temp_checkbox[type=checkbox]:checked + span.strikeline {
+.temp_checkbox.strikeline.touch {
     text-decoration-line: line-through;
     color: gainsboro;
 }
