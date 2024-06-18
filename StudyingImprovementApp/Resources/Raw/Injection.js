@@ -94,7 +94,7 @@ function Inject_fn() {
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > p');
-    add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　/); //「ア　ねこねこ」に一致
+    add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　{3,}/); //「ア　ねこねこ」に一致
     add_temp_marker(elements, /[1-9１-９]\s*((①|②|③|④|⑤|⑥|⑦|⑧|⑨)[ァ-ヴ]\s)+/); //「１ ①ア ①ア」に一致
     add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/); //「１ Ａウ ２ Ａウ」に一致
     add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g); //「１ アウ ２ イウ」に一致
