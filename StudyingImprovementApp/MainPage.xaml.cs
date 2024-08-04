@@ -20,9 +20,8 @@ namespace StudyingImprovement
             this.WebView.Navigated += WebView_Navigated;
             this.WebView.RequestReceived += WebView_RequestReceived;
             this.WebView.JSInvokeTarget = new TextSpechListener(this.WebView);
+            BindingContext = Setting.Current;
         }
-
-        public Setting Settings { get => Setting.Current; }
 
         //TODO:結合度が高すぎるのでよくない
         public class TextSpechListener
@@ -40,6 +39,7 @@ namespace StudyingImprovement
             }
             public void onStartTextToSpeech()
             {
+                Setting.Current.IsShowTextSpeech = true;
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     await this.webView.InvokeJsMethodAsync("onStartTextToSpeech");
@@ -55,8 +55,6 @@ namespace StudyingImprovement
                     Pitch = 1.0f,   // 0.0 - 2.0
                     Volume = 1.0f, // 0.0 - 1.0
                 };
-
-                Setting.Current.IsShowTextSpeech = true;
 
                 cancellationTokenSource = new CancellationTokenSource();
 
@@ -83,6 +81,8 @@ namespace StudyingImprovement
 
             public void cancelSpeech()
             {
+                Setting.Current.IsShowTextSpeech = false;
+
                 if (cancellationTokenSource?.IsCancellationRequested ?? true)
                     return;
 
@@ -152,6 +152,7 @@ namespace StudyingImprovement
 
         private void MainPage_Loaded(object? sender, EventArgs e)
         {
+            Setting.Current.IsShowTextSpeech = false;
             var connectionProfile = Connectivity.Current.ConnectionProfiles;
             bool hasWifi = connectionProfile.Contains(ConnectionProfile.WiFi);
             if(hasWifi == false && Setting.Current.ForceDownloadMovie == false)

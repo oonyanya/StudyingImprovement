@@ -15,6 +15,7 @@ namespace StudyingImprovement.Model
         private void Init()
         {
             _ForceDownloadMovie = Preferences.Get("ForceDownloadMovie", false);
+            _IsShowTextSpeech = false;
         }
 
         static Setting? _current = null;

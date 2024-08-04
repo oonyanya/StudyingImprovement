@@ -2,18 +2,24 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ejs="clr-namespace:HybridWebView;assembly=HybridWebView"
+             xmlns:local="clr-namespace:StudyingImprovement"
              x:Class="StudyingImprovement.MainPage">
-    <Grid>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></local:BooleanToVisibilityConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid BackgroundColor="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ProgressBar x:Name="ProgressBar" Grid.Row="0"/>
-        <StackLayout Orientation="Horizontal" Grid.Row="1" IsVisible="{Binding Settings.IsShowTextSpeech}">
-            <Button Text="▶️" Clicked="Button_Play_Clicked"></Button>
-            <Button Text="⏸️" Clicked="Button_Pause_Clicked"></Button>
-            <Button Text="⏹" Clicked="Button_Stop_Clicked"></Button>
+        <StackLayout Orientation="Horizontal" Grid.Row="1" IsVisible="{Binding IsShowTextSpeech,Mode=OneWay}">
+            <Button Text="▶️" Clicked="Button_Play_Clicked" BackgroundColor="WhiteSmoke"></Button>
+            <Button Text="⏸️" Clicked="Button_Pause_Clicked" BackgroundColor="WhiteSmoke"></Button>
+            <Button Text="⏹" Clicked="Button_Stop_Clicked" BackgroundColor="WhiteSmoke"></Button>
         </StackLayout>
         <ejs:HybridWebView x:Name="WebView" Grid.Row="2" StartPath="https://member.studying.jp"/>
     </Grid>
