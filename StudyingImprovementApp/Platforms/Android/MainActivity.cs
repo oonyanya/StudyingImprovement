@@ -13,6 +13,7 @@ namespace StudyingImprovement
             var menu = mode.Menu;
             menu.Add("音声で読み上げる");
             menu.GetItem(0).SetOnMenuItemClickListener(new MyCreateContextMenuListener());
+            mode.InvalidateContentRect();
             base.OnActionModeStarted(mode);
         }
     }
