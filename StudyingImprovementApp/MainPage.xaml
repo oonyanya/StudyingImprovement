@@ -3,14 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ejs="clr-namespace:HybridWebView;assembly=HybridWebView"
              x:Class="StudyingImprovement.MainPage">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ProgressBar x:Name="ProgressBar" Grid.Row="0"/>
-        <ejs:HybridWebView x:Name="WebView" StartPath="https://member.studying.jp" Grid.Row="1"/>
+        <StackLayout Orientation="Horizontal" Grid.Row="1" IsVisible="{Binding Settings.IsShowTextSpeech}">
+            <Button Text="▶️" Clicked="Button_Play_Clicked"></Button>
+            <Button Text="⏸️" Clicked="Button_Pause_Clicked"></Button>
+            <Button Text="⏹" Clicked="Button_Stop_Clicked"></Button>
+        </StackLayout>
+        <ejs:HybridWebView x:Name="WebView" Grid.Row="2" StartPath="https://member.studying.jp"/>
     </Grid>
 
 </ContentPage>

@@ -1,5 +1,8 @@
-﻿using Android.Webkit;
+﻿using Android.Content;
+using Android.Views;
+using Android.Webkit;
 using Java.Interop;
+using Microsoft.Maui.Controls;
 using AWebView = Android.Webkit.WebView;
 
 namespace HybridWebView

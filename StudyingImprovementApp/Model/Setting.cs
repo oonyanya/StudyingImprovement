@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StudyingImprovement.Model
 {
-    internal class Setting : BindableBase
+    public class Setting : BindableBase
     {
         private Setting()
         {
@@ -38,6 +38,16 @@ namespace StudyingImprovement.Model
             {
                 SetProperty(ref _ForceDownloadMovie, value);
                 Preferences.Set("ForceDownloadMovie", value);
+            }
+        }
+
+        bool _IsShowTextSpeech = false;
+        public bool IsShowTextSpeech
+        {
+            get => _IsShowTextSpeech;
+            set
+            {
+                SetProperty(ref _IsShowTextSpeech, value);
             }
         }
     }

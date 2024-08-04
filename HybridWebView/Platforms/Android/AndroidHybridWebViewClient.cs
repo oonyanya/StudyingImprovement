@@ -1,4 +1,5 @@
-﻿using Android.Webkit;
+﻿using Android.Views;
+using Android.Webkit;
 using Java.Time;
 using Microsoft.Maui.Platform;
 using System.Text;
@@ -22,7 +23,7 @@ namespace HybridWebView
             var webView = (HybridWebView)_handler.VirtualView;
             string? HybridAssetRoot = ((HybridWebView)_handler.VirtualView).HybridAssetRoot;
 
-            if (new Uri(requestUri) is Uri uri && HybridWebView.AppOriginUri.IsBaseOf(uri) && HybridAssetRoot != null)
+            if (new Uri(requestUri) is Uri uri && HybridWebView.AppOriginUri.IsBaseOf(uri))
             {
                 var relativePath = HybridWebView.AppOriginUri.MakeRelativeUri(uri).ToString().Replace('/', '\\');
 

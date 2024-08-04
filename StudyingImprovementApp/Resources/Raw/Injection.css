@@ -47,6 +47,11 @@
     padding-right: 2em;
 }
 
+/* 音声読み上げ */
+.text_reading {
+    background-color: #FFEB3B;
+}
+
 /* 老眼対策のため行間を広げる */
 .redactor-editor * {
     line-height: 1.8em !important;

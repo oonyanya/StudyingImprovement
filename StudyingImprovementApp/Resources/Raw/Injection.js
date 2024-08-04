@@ -138,6 +138,118 @@ function Inject_fn() {
     }
 }
 
+nodeIterator = null;
+/* ひとつ前の要素 */
+preElement = null;
+/* 中断されたかどうか */
+isPaused = false;
+/* 再生ボタンを追加する */
+function onStartTextToSpeech() {
+    var selection = document.getSelection();
+    if (selection.anchorNode != null) {
+        console.log("start text speech:" + selection.anchorNode.textContent);
+        StartSpeakText(selection.anchorNode.textContent);
+    }
+}
+/* 音声読み上げを開始する */
+function StartSpeakText(start_element)
+{
+    var hasnode = false;
+    nodeIterator = document.createNodeIterator(document.getElementById("doc"), 4);
+    if (start_element != null) {
+        while (nodeIterator.nextNode() != null) {
+            if (nodeIterator.referenceNode.textContent.indexOf(start_element) != -1) {
+                hasnode = true;
+                break;
+            }
+        }
+        if (hasnode == false)
+            nodeIterator = document.createNodeIterator(document.getElementById("doc"), 4);
+    }
+    if (hasnode == false)
+        nodeIterator.nextNode();
+    preElement = null;
+    currentElement = null;
+    SpeakText();
+}
+/* 音声読み上げを実行する */
+function requestSpeak(text)
+{
+    if (window.HybridWebView == "undefined")
+        return;
+    window.HybridWebView.SendMessageToDotNet(1, JSON.stringify({ "MethodName": "speakText", "ParamValues": [text] }));
+}
+/* 表示判定を行う */
+function isFullyVisible(elem, tolerance = 0.5) {
+    const rect = elem.getBoundingClientRect();
+    const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+    const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+    /* Check with tolerance for being within the viewport */
+    const inViewVertically = rect.top <= windowHeight + tolerance && rect.bottom >= -tolerance;
+    const inViewHorizontally = rect.left <= windowWidth + tolerance && rect.right >= -tolerance;
+    const inViewport = inViewVertically && inViewHorizontally;
+
+    /* Check for CSS visibility, 'hidden' attribute, and dimensions */
+    const style = getComputedStyle(elem);
+    const notHiddenByCSS = style.display !== 'none' && style.visibility !== 'hidden' && parseFloat(style.opacity) > 0;
+    const notHiddenAttribute = !elem.hidden;
+    const hasDimensions = elem.offsetWidth > 0 || elem.offsetHeight > 0 || elem.getClientRects().length > 0;
+
+    return inViewport && notHiddenByCSS && notHiddenAttribute && hasDimensions;
+}
+/* 現在のノードのテキストを読み上げ、次のノードに移動する */
+function SpeakText() {
+    var currentElement = nodeIterator.referenceNode;
+    if (currentElement != null) {
+        if (preElement != null && preElement != currentElement)
+            preElement.parentElement.classList.remove("text_reading");
+        currentElement.parentElement.classList.add("text_reading");
+        currentElement.parentElement.scrollIntoView(false);
+        if (isFullyVisible(currentElement.parentElement)) {
+            requestSpeak(currentElement.textContent);
+        } else {
+            requestSpeak("");   /* 空文字を送るとスキップして次のノードに行くのと同じ効果が生まれる */
+        }
+        preElement = currentElement;
+    } else {
+        preElement = null;
+        nodeIterator = null;
+    }
+}
+/* 音声読み上げが完了した */
+function onSpeakReadFinish() {
+    if (window.HybridWebView == "undefined")
+        return;
+    if (isPaused == false) {
+        nodeIterator.nextNode();
+        SpeakText();
+    }
+}
+/* 音声読み上げが中断された */
+function onSpeakReadPause() {
+    preElement.parentElement.classList.remove("text_reading");
+    isPaused = true;
+}
+/* 音声読み上げがキャンセルされた */
+function onSpeakReadCancel() {
+    if (preElement != null) {
+        preElement.parentElement.classList.remove("text_reading");
+    }
+    preElement = null;
+    nodeIterator = null;
+    isPaused = true;
+}
+/* 音声読み上げボタンが押された */
+function onSpeakPlayStart() {
+    isPaused = false;
+    if (nodeIterator != null) {
+        SpeakText();
+    } else {
+        StartSpeakText();
+    }
+}
+
 function Inject_fn_onload() {
     /* iframがある場合、どうせ後で読み込まれる */
     if (typeof (jQuery) == "undefined")

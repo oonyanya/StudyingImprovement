@@ -4,6 +4,9 @@ using CommunityToolkit.Maui.Alerts;
 using StudyingImprovement.Model;
 using Microsoft.Maui.Controls;
 using System.Text.RegularExpressions;
+using Microsoft.Maui.Media;
+using System.Threading;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace StudyingImprovement
 {
@@ -16,6 +19,85 @@ namespace StudyingImprovement
             this.WebView.Navigating += WebView_Navigating;
             this.WebView.Navigated += WebView_Navigated;
             this.WebView.RequestReceived += WebView_RequestReceived;
+            this.WebView.JSInvokeTarget = new TextSpechListener(this.WebView);
+        }
+
+        public Setting Settings { get => Setting.Current; }
+
+        //TODO:結合度が高すぎるのでよくない
+        public class TextSpechListener
+        {
+            HybridWebView.HybridWebView webView;
+            CancellationTokenSource cancellationTokenSource;
+            public TextSpechListener(HybridWebView.HybridWebView web)
+            {
+                this.webView = web;
+                WeakReferenceMessenger.Default.Register<TextSpechListener, Message>(this, (s, e) =>
+                {
+                    if (e.Method == Message.SpeechToText.Method)
+                        this.onStartTextToSpeech();
+                });
+            }
+            public void onStartTextToSpeech()
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await this.webView.InvokeJsMethodAsync("onStartTextToSpeech");
+                });
+            }
+
+            public async void speakText(string text)
+            {
+                IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
+
+                SpeechOptions options = new SpeechOptions()
+                {
+                    Pitch = 1.0f,   // 0.0 - 2.0
+                    Volume = 1.0f, // 0.0 - 1.0
+                };
+
+                Setting.Current.IsShowTextSpeech = true;
+
+                cancellationTokenSource = new CancellationTokenSource();
+
+                System.Diagnostics.Debug.WriteLine("Speaing now:" + text);
+
+                if(!string.IsNullOrEmpty(text))
+                    await TextToSpeech.Default.SpeakAsync(text, options, cancellationTokenSource.Token);
+
+                MainThread.BeginInvokeOnMainThread(async () => {
+                    await this.webView.InvokeJsMethodAsync("onSpeakReadFinish");
+                });
+            }
+            public void pauseSpeech()
+            {
+                if (cancellationTokenSource?.IsCancellationRequested ?? true)
+                    return;
+
+                cancellationTokenSource.Cancel();
+
+                MainThread.BeginInvokeOnMainThread(async () => {
+                    await this.webView.InvokeJsMethodAsync("onSpeakReadPause");
+                });
+            }
+
+            public void cancelSpeech()
+            {
+                if (cancellationTokenSource?.IsCancellationRequested ?? true)
+                    return;
+
+                cancellationTokenSource.Cancel();
+
+                MainThread.BeginInvokeOnMainThread(async () => {
+                    await this.webView.InvokeJsMethodAsync("onSpeakReadCancel");
+                });
+            }
+            public void playSpeech()
+            {
+                MainThread.BeginInvokeOnMainThread(async () => {
+                    await this.webView.InvokeJsMethodAsync("onSpeakPlayStart");
+                });
+            }
         }
 
         private Task WebView_RequestReceived(HybridWebView.HybridWebViewProxyEventArgs arg)
@@ -47,7 +129,7 @@ namespace StudyingImprovement
             {
                 string css = await LoadAsset("Injection.css");
                 string js = await LoadAsset("Injection.js");
-                string inection_code = string.Format("function inject_css(){{var el=document.createElement('style');el.textContent = '{0}';document.head.append(el);}}if (document.readyState === 'complete'){{inject_css();}}else{{window.addEventListener('load', function(){{inject_css();}});}}{1}", css, js);
+                string inection_code = string.Format("function inject_file(filename){{var el=document.createElement('script');el.setAttribute('src',filename);document.head.append(el);}}function inject_css(){{var el=document.createElement('style');el.textContent = '{0}';document.head.append(el);}}inject_file('https://0.0.0.0/_hwv/HybridWebView.js');if (document.readyState === 'complete'){{inject_css();}}else{{window.addEventListener('load', function(){{inject_css();}});}}{1}", css, js); ;
                 await WebView.EvaluateJavaScriptAsync(inection_code);
                 this.ProgressBar.Progress = 1;
                 this.ProgressBar.IsVisible = false;
@@ -97,6 +179,23 @@ namespace StudyingImprovement
         {
         }
 
+        private void Button_Pause_Clicked(object sender, EventArgs e)
+        {
+            var textSpeech = (TextSpechListener)this.WebView.JSInvokeTarget;
+            textSpeech.pauseSpeech();
+        }
+        private void Button_Stop_Clicked(object sender, EventArgs e)
+        {
+            var textSpeech = (TextSpechListener)this.WebView.JSInvokeTarget;
+            textSpeech.cancelSpeech();
+            Setting.Current.IsShowTextSpeech = false;
+        }
+
+        private void Button_Play_Clicked(object sender, EventArgs e)
+        {
+            var textSpeech = (TextSpechListener)this.WebView.JSInvokeTarget;
+            textSpeech.playSpeech();
+        }
     }
 
 }
