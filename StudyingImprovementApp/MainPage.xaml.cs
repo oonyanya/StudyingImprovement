@@ -50,18 +50,12 @@ namespace StudyingImprovement
             {
                 IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
 
-                SpeechOptions options = new SpeechOptions()
-                {
-                    Pitch = 1.0f,   // 0.0 - 2.0
-                    Volume = 1.0f, // 0.0 - 1.0
-                };
-
                 cancellationTokenSource = new CancellationTokenSource();
 
                 System.Diagnostics.Debug.WriteLine("Speaing now:" + text);
 
                 if(!string.IsNullOrEmpty(text))
-                    await TextToSpeech.Default.SpeakAsync(text, options, cancellationTokenSource.Token);
+                    await TextToSpeech.Default.SpeakAsync(text, null, cancellationTokenSource.Token);
 
                 MainThread.BeginInvokeOnMainThread(async () => {
                     await this.webView.InvokeJsMethodAsync("onSpeakReadFinish");
