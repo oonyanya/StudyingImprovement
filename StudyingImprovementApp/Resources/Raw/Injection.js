@@ -205,7 +205,11 @@ function SpeakText() {
         if (preElement != null && preElement != currentElement)
             preElement.parentElement.classList.remove("text_reading");
         currentElement.parentElement.classList.add("text_reading");
-        currentElement.parentElement.scrollIntoView(false);
+        if (currentElement.parentElement.scrollIntoViewIfNeeded != typeof (undefined)) {
+            currentElement.parentElement.scrollIntoViewIfNeeded(false);
+        } else {
+            currentElement.parentElement.scrollIntoView(false);
+        }
         if (isFullyVisible(currentElement.parentElement)) {
             requestSpeak(currentElement.textContent);
         } else {
