@@ -147,24 +147,23 @@ isPaused = false;
 function onStartTextToSpeech() {
     var selection = document.getSelection();
     if (selection.anchorNode != null) {
-        console.log("start text speech:" + selection.anchorNode.textContent);
-        StartSpeakText(selection.anchorNode.textContent);
+        StartSpeakText(selection.anchorNode);
     }
 }
 /* 音声読み上げを開始する */
 function StartSpeakText(start_element)
 {
     var hasnode = false;
-    nodeIterator = document.createNodeIterator(document.getElementById("doc"), 4);
+    nodeIterator = document.createNodeIterator(document.body, 4);
     if (start_element != null) {
         while (nodeIterator.nextNode() != null) {
-            if (nodeIterator.referenceNode.textContent.indexOf(start_element) != -1) {
+            if (nodeIterator.referenceNode.parentElement === start_element.parentElement) {
                 hasnode = true;
                 break;
             }
         }
         if (hasnode == false)
-            nodeIterator = document.createNodeIterator(document.getElementById("doc"), 4);
+            nodeIterator = document.createNodeIterator(document.body, 4);
     }
     if (hasnode == false)
         nodeIterator.nextNode();
