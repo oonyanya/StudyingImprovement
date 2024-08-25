@@ -92,6 +92,26 @@ namespace StudyingImprovement
                     await this.webView.InvokeJsMethodAsync("onSpeakPlayStart");
                 });
             }
+            public void prevSpeech()
+            {
+                cancellationTokenSource.Cancel();
+
+                System.Diagnostics.Debug.WriteLine("前へ移動する");
+
+                MainThread.BeginInvokeOnMainThread(async () => {
+                    await this.webView.InvokeJsMethodAsync("onSpeakPrev");
+                });
+            }
+            public void nextSpeech()
+            {
+                cancellationTokenSource.Cancel();
+
+                System.Diagnostics.Debug.WriteLine("次へ進む");
+
+                MainThread.BeginInvokeOnMainThread(async () => {
+                    await this.webView.InvokeJsMethodAsync("onSpeakNext");
+                });
+            }
         }
 
         private Task WebView_RequestReceived(HybridWebView.HybridWebViewProxyEventArgs arg)
@@ -190,6 +210,16 @@ namespace StudyingImprovement
         {
             var textSpeech = (TextSpechListener)this.WebView.JSInvokeTarget;
             textSpeech.playSpeech();
+        }
+        private void Button_Prev_Clicked(object sender, EventArgs e)
+        {
+            var textSpeech = (TextSpechListener)this.WebView.JSInvokeTarget;
+            textSpeech.prevSpeech();
+        }
+        private void Button_Next_Clicked(object sender, EventArgs e)
+        {
+            var textSpeech = (TextSpechListener)this.WebView.JSInvokeTarget;
+            textSpeech.nextSpeech();
         }
     }
 

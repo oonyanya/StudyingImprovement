@@ -143,6 +143,8 @@ nodeIterator = null;
 preElement = null;
 /* 中断されたかどうか */
 isPaused = false;
+/* 次方向に再生するかどうか。一時的に再生方向を変えても自動的に次に移動する */
+isSpeakDirectionNext = true;
 /* 再生ボタンを追加する */
 function onStartTextToSpeech() {
     var selection = document.getSelection();
@@ -225,7 +227,12 @@ function onSpeakReadFinish() {
     if (window.HybridWebView == "undefined")
         return;
     if (isPaused == false) {
-        nodeIterator.nextNode();
+        if (isSpeakDirectionNext) {
+            nodeIterator.nextNode();
+        } else {
+            nodeIterator.previousNode();
+            isSpeakDirectionNext = true;
+        }
         SpeakText();
     }
 }
@@ -251,6 +258,18 @@ function onSpeakPlayStart() {
     } else {
         StartSpeakText();
     }
+}
+/* 前の単語や段落に移動するボタンが押された */
+function onSpeakPrev()
+{
+    /* すでにキャンセルされてるので、一時的に前方向にする */
+    isSpeakDirectionNext = false;
+}
+/* 次の単語や段落に移動するボタンが押された */
+function onSpeakNext()
+{
+    /* すでにキャンセルされてるので、次方向にする */
+    isSpeakDirectionNext = true;
 }
 
 function Inject_fn_onload() {
