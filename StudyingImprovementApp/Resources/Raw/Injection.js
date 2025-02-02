@@ -84,21 +84,11 @@ function Inject_fn() {
         element.append(memo_element);
     }
 
-    let elements = document.querySelectorAll('div.question_text > div > ul > li');
-    add_temp_marker(elements);
-
-    elements = document.querySelectorAll('div.question_text > div > ol > li');
-    add_temp_marker(elements);
-
-    elements = document.querySelectorAll('div.question_text > div > table > tbody > tr > *:first-child');
+    let elements = document.querySelectorAll('li.checkable_list_item');
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > p');
-    add_temp_marker(elements, /[^ァ-ヴ][ァ-ヴ]　{3,}/); /*「ア　ねこねこ」に一致 */
-    add_temp_marker(elements, /[1-9１-９]\s*((①|②|③|④|⑤|⑥|⑦|⑧|⑨)[ァ-ヴ]\s)+/); /*「１ ①ア ①ア」に一致 */
-    add_temp_marker(elements, /[1-9１-９]\s*([Ａ-Ｚ][ァ-ヴ]\s*)+/); /*「１ Ａウ ２ Ａウ」に一致 */
     add_temp_marker_for_text(elements, /([1-9１-９]\s*[ァ-ヴ]+)/g); /*「１ アウ ２ イウ」に一致 */
-    add_temp_marker_for_text(elements, /(.+)/g);
 
     add_temp_memo(document.querySelector("div.question_item"));
 
