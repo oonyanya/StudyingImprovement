@@ -14,15 +14,15 @@ function Inject_fn() {
             }
 
             const new_item1 = document.createElement('span');
-            new_item1.className= "temp_checkbox mark";
+            new_item1.className = "temp_checkbox mark";
             new_item1.innerHTML = MARU;
 
             const new_item2 = document.createElement('span');
-            new_item2.className= "temp_checkbox mark";
+            new_item2.className = "temp_checkbox mark";
             new_item2.innerHTML = BATSU;
 
             const new_item4 = document.createElement('span');
-            new_item4.className= "temp_checkbox mark";
+            new_item4.className = "temp_checkbox mark";
             new_item4.innerHTML = SANKAKU;
 
             e.append(new_item1, new_item2, new_item4);
@@ -67,10 +67,10 @@ function Inject_fn() {
                 return wash_string_for_sreen_reader(new_s);
             });
             let child_elements = e.querySelectorAll('.folding_box');
-            child_elements.forEach((ce)=>{
+            child_elements.forEach((ce) => {
                 console.log(ce.textContent);
-                if(ce.textContent.length < FOLDING_LENGTH_IN_BRAKET){
-                  ce.classList.add('touch');
+                if (ce.textContent.length < FOLDING_LENGTH_IN_BRAKET) {
+                    ce.classList.add('touch');
                 }
             });
         });
@@ -92,7 +92,7 @@ function Inject_fn() {
         element.append(memo_element);
     }
 
-    let elements = document.querySelectorAll('li.checkable_list_item');
+    let elements = document.querySelectorAll('.checkable_list_item');
     add_temp_marker(elements);
 
     elements = document.querySelectorAll('div.question_text > div > p');
@@ -151,8 +151,7 @@ function onStartTextToSpeech() {
     }
 }
 /* 音声読み上げを開始する */
-function StartSpeakText(start_element)
-{
+function StartSpeakText(start_element) {
     var hasnode = false;
     nodeIterator = document.createNodeIterator(document.body, 4);
     if (start_element != null) {
@@ -172,8 +171,7 @@ function StartSpeakText(start_element)
     SpeakText();
 }
 /* 音声読み上げを実行する */
-function requestSpeak(text)
-{
+function requestSpeak(text) {
     if (window.HybridWebView == "undefined")
         return;
     window.HybridWebView.SendMessageToDotNet(1, JSON.stringify({ "MethodName": "speakText", "ParamValues": [text] }));
@@ -258,14 +256,12 @@ function onSpeakPlayStart() {
     }
 }
 /* 前の単語や段落に移動するボタンが押された */
-function onSpeakPrev()
-{
+function onSpeakPrev() {
     /* すでにキャンセルされてるので、一時的に前方向にする */
     isSpeakDirectionNext = false;
 }
 /* 次の単語や段落に移動するボタンが押された */
-function onSpeakNext()
-{
+function onSpeakNext() {
     /* すでにキャンセルされてるので、次方向にする */
     isSpeakDirectionNext = true;
 }
