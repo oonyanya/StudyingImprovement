@@ -2,6 +2,7 @@ function Inject_fn() {
     const MARU = 'O';
     const BATSU = 'X';
     const SANKAKU = '？';
+    const FOLDING_LENGTH_IN_BRAKET = 30;
 
     function add_temp_marker(elements) {
         add_temp_marker(elements, null);
@@ -64,6 +65,13 @@ function Inject_fn() {
                     replaceAll(/（/g, '<span class=\'folding_box\'>※<span>（').
                     replaceAll(/）/g, '）</span></span>');
                 return wash_string_for_sreen_reader(new_s);
+            });
+            let child_elements = e.querySelectorAll('.folding_box');
+            child_elements.forEach((ce)=>{
+                console.log(ce.textContent);
+                if(ce.textContent.length < FOLDING_LENGTH_IN_BRAKET){
+                  ce.classList.add('touch');
+                }
             });
         });
     }
