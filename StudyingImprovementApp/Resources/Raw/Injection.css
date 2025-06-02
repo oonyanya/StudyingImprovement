@@ -7,44 +7,43 @@
     padding-right: 0.5em;
 }
 
-.temp_checkbox.mark.touch{
-    color: black;
-    font-weight: bold;
-}
+    .temp_checkbox.mark.touch {
+        color: black;
+        font-weight: bold;
+    }
 
 .temp_checkbox.strikeline {
     text-decoration-line: initial;
     color: black;
 }
-.temp_checkbox.strikeline.touch {
-    text-decoration-line: line-through;
-    color: gainsboro;
-}
+
+    .temp_checkbox.strikeline.touch {
+        text-decoration-line: line-through;
+        color: gainsboro;
+    }
 
 /* 一時的なメモ用 */
-.temp_memo{
+.temp_memo {
     width: 100%;
 }
 
 /* 長いカッコを隠すボタン用 */
-.folding_box {
-    color: darkgray;
-}
-
 .folding_box > span {
-    display: none;
+    color: gainsboro;
 }
 
 .folding_box.touch > span {
-    display: inline;
     color: black;
 }
 
+.span-memory > .folding_box > span {
+    color: currentcolor;
+}
+
 /* 折り畳み機能と暗記マーカーがかぶる時の対策 */
-.span-memory
-{
-    padding-left: 2em;
-    padding-right: 2em;
+.span-memory {
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 /* 音声読み上げ */

@@ -62,7 +62,7 @@ function Inject_fn() {
         elements.forEach((e) => {
             replace_element(e, (s) => {
                 let new_s = s.
-                    replaceAll(/（/g, '<span class=\'folding_box\'>※<span>（').
+                    replaceAll(/（/g, '<span class=\'folding_box\'><span>（').
                     replaceAll(/）/g, '）</span></span>');
                 return wash_string_for_sreen_reader(new_s);
             });
