@@ -1,12 +1,12 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using System.Text;
-using CommunityToolkit.Maui.Alerts;
-using StudyingImprovement.Model;
-using Microsoft.Maui.Controls;
-using System.Text.RegularExpressions;
-using Microsoft.Maui.Media;
-using System.Threading;
+﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Media;
+using StudyingImprovement.Model;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace StudyingImprovement
 {
@@ -114,12 +114,13 @@ namespace StudyingImprovement
             }
         }
 
+        Regex movie_regex = new Regex(".+\\.(mp3|mp4|ts)");
+
         private Task WebView_RequestReceived(HybridWebView.HybridWebViewProxyEventArgs arg)
         {
             var connectionProfile = Connectivity.Current.ConnectionProfiles;
             bool hasWifi = connectionProfile.Contains(ConnectionProfile.WiFi);
-            Regex regex = new Regex(".+\\.(mp3|mp4|ts)");
-            if (hasWifi == false && Setting.Current.ForceDownloadMovie == false && regex.IsMatch(arg.Url))
+            if (hasWifi == false && Setting.Current.ForceDownloadMovie == false && movie_regex.IsMatch(arg.Url))
             {
                 System.Diagnostics.Debug.WriteLine("blocked:" + arg.Url);
                 //ストリーミング動画をブロックする
